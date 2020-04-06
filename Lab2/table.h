@@ -1,11 +1,13 @@
 #ifndef _TABLE_H_
 #define _TABLE_H_
 
+    #include <iostream>
+
     struct Table
     {
         int ** data;
-        const size_t width; 
-        const size_t height;
+        int width; 
+        int height;
         
         Table(int rows, int cols);
         ~Table();
@@ -34,7 +36,7 @@
     /*
     add value (val) on position (xPos, yPos)
     */
-    void add(Table& tab, int xPos, int yPos, int val){
+    void set(Table& tab, int xPos, int yPos, int val){
 
         if (xPos <= tab.width && yPos <= tab.height){
             tab.data[xPos][yPos] = val;
@@ -48,6 +50,11 @@
             }
             std::cout << std::endl;
         }
+    }
+
+    void resize(Table& tab, int new_width, int new_height){
+        tab.width = new_width;
+        tab.height = new_height;
     }
 
 #endif

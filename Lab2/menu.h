@@ -76,7 +76,7 @@
         cout << "New Height:" << endl;
         cin >> new_height;
 
-        resize(tab, new_width, new_height);
+        // resize(tab, new_width, new_height);
     }
 
     void userMenu::mainMenu(){
