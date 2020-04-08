@@ -4,20 +4,18 @@
     #include <iostream>
     #include "table.h"
 
-    using namespace std;
-
-    Table tab(1, 1); 
+    using namespace std; 
 
     class userMenu
     {
     public:
-        static bool isMenu();    
+        static bool isMenu(Table &tab);    
         static void mainMenu();
-        static void sizeChangeMenu();
-        static void dataChangeMenu();
+        static void sizeMenu(Table &tab);
+        static void dataMenu(Table &tab);
     };
 
-    bool userMenu::isMenu(){
+    bool userMenu::isMenu(Table &tab){
         char val;
 
         userMenu::mainMenu();
@@ -26,11 +24,11 @@
         switch (val)
         {
             case '1':
-                userMenu::sizeChangeMenu();
+                userMenu::sizeMenu(tab);
                 break;
             
             case '2':
-                userMenu::dataChangeMenu();
+                userMenu::dataMenu(tab);
                 break;
 
             case '3':
@@ -52,7 +50,7 @@
         return 1;
     }
 
-        void userMenu::dataChangeMenu(){
+        void userMenu::dataMenu(Table &tab){
         int xPos;
         int yPos;
         int new_data;
@@ -67,7 +65,7 @@
         set(tab, xPos, yPos, new_data);
     }
 
-    void userMenu::sizeChangeMenu(){
+    void userMenu::sizeMenu(Table &tab){
         int new_width;
         int new_height;
     
@@ -76,7 +74,7 @@
         cout << "New Height:" << endl;
         cin >> new_height;
 
-        // resize(tab, new_width, new_height);
+        resize(tab, new_width, new_height);
     }
 
     void userMenu::mainMenu(){

@@ -4,6 +4,7 @@
 
 int main(int argc, char const *argv[])
 {
-    while (userMenu::isMenu());
-    return 0;
+    Table tab(2, 2);
+
+    while (userMenu::isMenu(tab));
 }

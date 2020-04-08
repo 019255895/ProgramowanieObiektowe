@@ -7,6 +7,7 @@
     #include "table.h"
 
     using namespace std;
+    
     void read(string fileName, Table& tab){
         ifstream fp(fileName);
 
