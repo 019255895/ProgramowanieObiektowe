@@ -18,8 +18,7 @@
     {
         data = new int* [rows]();
         
-        for (int i = 0; i < rows; i++) 
-        {
+        for (int i = 0; i < rows; i++){
             data[i] = new int[cols]();
         }
     }
@@ -53,34 +52,33 @@
     }
 
     void resize(Table& tab, int new_width, int new_height){
-            Table temp(tab.width, tab.height);
+        Table temp(tab.width, tab.height);
 
-            for (size_t i = 0; i < temp.width; i ++){
-                for (size_t j = 0; j < temp.height; j ++){
-                    temp.data[i][j] = tab.data[i][j];
-                }
+        for (size_t i = 0; i < temp.width; i ++){
+            for (size_t j = 0; j < temp.height; j ++){
+                temp.data[i][j] = tab.data[i][j];
             }
+        }
 
-            for (auto i = 0; i < tab.height; i++) 
-                delete[] tab.data[i];
-    
-            delete[] tab.data; 
+        for (auto i = 0; i < tab.height; i++) 
+            delete[] tab.data[i];
 
-            tab.width = new_width;
-            tab.height = new_height;
+        delete[] tab.data; 
+
+        tab.width = new_width;
+        tab.height = new_height;
                 
-            tab.data = new int* [new_width]();
+        tab.data = new int* [new_width]();
         
-            for (size_t i = 0; i < new_width; i++) 
-            {
-                tab.data[i] = new int[new_height]();
-            }
+        for (size_t i = 0; i < new_width; i++){
+            tab.data[i] = new int[new_height]();
+        }
 
-            for (size_t i = 0; i < temp.width; i ++){
-                for (size_t j = 0; j < temp.height; j ++){
-                    tab.data[i][j] = temp.data[i][j];
-                }
+        for (size_t i = 0; i < temp.width; i ++){
+            for (size_t j = 0; j < temp.height; j ++){
+                tab.data[i][j] = temp.data[i][j];
             }
+        }
     }
 
 #endif

@@ -3,6 +3,7 @@
 
     #include <iostream>
     #include "table.h"
+    #include "files.h"
 
     using namespace std; 
 
@@ -13,6 +14,7 @@
         static void mainMenu();
         static void sizeMenu(Table &tab);
         static void dataMenu(Table &tab);
+        static void saveChanges(Table &tab);
     };
 
     bool userMenu::isMenu(Table &tab){
@@ -34,7 +36,9 @@
             case '3':
                 display(tab);
                 break;
-            
+            case '4':
+                userMenu::saveChanges(tab);
+                break;
             case 'q':
                 return 0;
                 break;
@@ -50,7 +54,7 @@
         return 1;
     }
 
-        void userMenu::dataMenu(Table &tab){
+    void userMenu::dataMenu(Table &tab){
         int xPos;
         int yPos;
         int new_data;
@@ -79,10 +83,19 @@
 
     void userMenu::mainMenu(){
         cout << "Menu:" << endl;
-        cout <<"1. Change table size."<< endl;
-        cout <<"2. Change table data."<< endl;
-        cout <<"3. Display table."<< endl;
-        cout <<"Press q for exit."<< endl;
+        cout << "(1) Change table size."<< endl;
+        cout << "(2) Change table data."<< endl;
+        cout << "(3) Display table."<< endl;
+        cout << "(4) Save changes." << endl;
+        cout << "Press q for exit."<< endl;
+    }
+
+    void userMenu::saveChanges(Table& tab){
+        char line;
+        std::string filePath;
+        cout << "Save file us:" << endl;
+        cin >> filePath;
+        write(filePath, tab);
     }
 
 #endif
