@@ -257,6 +257,15 @@ This class contain structure for convenient work with the table
             std::cout << "Option error" << std::endl;
         }  
     }
+    
+    /// \brief Buble sort function
+    void Buble(int &arr, int size);
+
+    /// \brief Check if array is sorted
+    bool isSorted(int &arr, int size);
+    
+    /// \brief Swap two nums value
+    void swap(int *num1, int *num2);
 
     /*!
     \brief Find medium value in item (row or column)
@@ -269,16 +278,25 @@ This class contain structure for convenient work with the table
     'c' if we searching medium in column
     */
     int MediumValue(Table &tab, int item, char option){
-        int max; ///< contain information about medium value 
+        int Medium; ///< contain information about medium value 
 
         ///\brief check option
         if (option == 'r'){
             ///\brief check for out size
             if (item <= tab.width){
+                int *temp = new int[tab.width]; 
 
-
-
-
+                for (size_t i = 0; i < tab.width; i ++){
+                    temp[i] = tab.data[item][i];
+                }
+                
+                // Buble(temp, tab.width);
+                
+                if (tab.width % 2 != 0){
+                    return temp[0];
+                } else {
+                    // return (temp[int(tab.width / 2)] + temp[int(tab.width / 2)  + 1]) / 2;
+                }
             } else {
                 std::cout << "Out of size" << std::endl;
             }
@@ -298,4 +316,29 @@ This class contain structure for convenient work with the table
         }  
     }
 
+    bool isSorted(int arr[], int size){
+        for (int i = 0; i < size - 1; i++){
+            if (arr[i] > arr[i + 1]){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    void Buble(int arr[], int size){
+        while (!isSorted(arr, size)){
+            for (int i = 0; i < size - 1; i++){
+                if (arr[i] > arr[i + 1]){
+                    swap(&arr[i], &arr[i + 1]);
+                }    
+            }   
+        }
+    }
+
+    void swap(int *num1, int *num2)  
+    {  
+        int temp = *num1;  
+        *num1 = *num2;  
+        *num2 = temp;  
+    }  
 #endif // _USERTABLE_H_
