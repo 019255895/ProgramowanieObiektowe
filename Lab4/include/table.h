@@ -5,12 +5,13 @@ namespace UserTable
     class Table
     {
     private:
-        int width = 0;
-        int height = 0;
+        int rows;
+        int cols;
         int **data;
+        const char * filePath;
 
     public:
-        Table(int rows, int cols); ///< Constructor
+        Table(const char * path); ///< Constructor
         ~Table(); ///< Destructor
         void display();
         void setValue(int xPos, int yPos, int newValue);
