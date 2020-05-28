@@ -1,0 +1,3 @@
+/home/atorulia/Desktop/Lab5/CMakeFiles/rebuild_cache.dir
+/home/atorulia/Desktop/Lab5/CMakeFiles/main.dir
+/home/atorulia/Desktop/Lab5/CMakeFiles/edit_cache.dir
