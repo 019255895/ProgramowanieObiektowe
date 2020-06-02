@@ -3,7 +3,7 @@ project (ProgramowanieObiektowe)
 
 include_directories(include)
  
-set(SOURCES src/mainapp.cpp, src/table.cpp, src/cells.cpp)
+set(SOURCES src/mainapp.cpp, src/table.cpp)
  
 file(GLOB SOURCES "src/*.cpp")
  

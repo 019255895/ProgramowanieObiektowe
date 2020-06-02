@@ -1,30 +1,79 @@
 #include <iostream>
 #include "table.h"
+#include "cell.h"
 
 namespace UserTable
 {
-    void Cell::_initInt(int number){
-        cell.type = v_int;
-        cell.value.iVal = number;
+    /**
+     * @brief Construct a new Table:: Table object
+     * 
+     * @param rows table width
+     * @param cols table height
+     */
+    Table::Table(int rows, int cols) : width(rows), height(cols)
+    {
+        data = new Cell * [rows];
+
+        for (size_t i = 0; i < rows; i ++){
+            data[i] = new Cell [cols];
+        }
     }
     
-    void Cell::_initChar(char character){
-        cell.type = v_char;
-        cell.value.cVal = character;
+    /**
+     * @brief Destroy the Table:: Table object
+     * 
+     */
+    Table::~Table()
+    {
+        for (auto i = 0; i < height; i++) 
+            delete[] data[i];
+        
+        delete[] data; 
     }
 
-    std::string Cell::_type(){
-        switch (cell.type)
-        {
-        case v_int:
-            return "Int";
-            break;
-        case v_char:
-            return "Char";
-            break;
-        default:
-            return "None";
-            break;
+    /**
+     * @brief Drawing table capacity
+     * 
+     */
+    void Table::display(){
+        for (size_t i = 0; i < height; i++){
+            for (size_t j = 0; j < width; j ++){
+                // Check if cell is empty 
+                if (data[i][j].type == empty){
+                    std::cout << "Empty cell" << " ";
+                } else {
+                    if (data[i][j].type == v_int){
+                        std::cout << data[i][j].number << " ";
+                    } else {
+                        std::cout << data[i][j].line << " ";
+                    }
+                }
+            }
+            std::cout << '\n';
         }
+    }
+
+    /**
+     * @brief Set cell as integer
+     * 
+     * @param value new cell value
+     * @param xPosition cell position in array
+     * @param yPosition cell position in array
+     */
+    void Table::setIntValue(int value, int xPosition, int yPosition){
+        data[xPosition][yPosition].type = v_int;
+        data[xPosition][yPosition].number = value;    
+    }
+
+    /**
+     * @brief Set cell as string
+     * 
+     * @param value new cell value
+     * @param xPosition cell position in array
+     * @param yPosition cell position in array
+     */
+    void Table::setStringValue(std::string value, int xPosition, int yPosition){
+        data[xPosition][yPosition].type = v_string;
+        data[xPosition][yPosition].line = value;    
     }
 } // namespace UserTable
