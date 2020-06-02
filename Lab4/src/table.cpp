@@ -57,10 +57,10 @@ namespace UserTable
         }
 
         ofs.close();
-        // for (auto i = 0; i < cols; i++) 
-        //     delete[] data[i];
+        for (auto i = 0; i < cols; i++) 
+            delete[] data[i];
         
-        // delete[] data; 
+        delete[] data; 
     }
 
     void Table::display(){
