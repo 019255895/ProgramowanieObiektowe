@@ -1,13 +1,11 @@
 #include <iostream>
 #include "table.h"
-
-
-using namespace UserTable;
+#include "menu.h"
 
 int main(int argc, char const *argv[])
 {
-
-    // Table tab("data.dat");
-    // tab.display();
+    while(true){
+        UserMenu::run();
+    }
     return 0;
 }
