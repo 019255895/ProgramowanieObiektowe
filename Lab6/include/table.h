@@ -1,18 +1,19 @@
 #pragma once
+#include <string>
 #include "cell.h"
 
 namespace UserTable
-{
+{   
     class Table
     {
     private:
         Cell ** data;
-        int width, height;
-        std::string path;        
+        int width, height;        
+        std::string path;
     public:
-        Table(std::string filePath);
         ~Table();
 
+        void _init(std::string filePath);
         /// Draw table capacity
         void display();
         /// Set integer value on cell

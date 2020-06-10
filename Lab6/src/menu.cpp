@@ -1,91 +1,113 @@
+#include <string>
+#include <cstdlib>
 #include "menu.h"
 #include "table.h"
-#include <string>
 
 using namespace UserTable;
 
 namespace UserMenu
 {   
-    // initialize table (read data from data.dat path)
-    Table tab("data.dat");
-
-    // quit from programm
-    void quit(){
-        exit(0);
-    }
     
-    // display table content
-    void dispayTable(){
-        tab.display();
-    }
-
-    // set table value by position
-    void setValue(){
-        std::string choice;
-        int x, y, i_val;
-        std::string s_val;
-
-        std::cout << "1. Set integer value." << '\n' 
-                  << "2. Set string value."  << '\n';
-        
-        std::cin >> choice;
-        std::cout << "Put x position:\n";
-        std::cin >> x; 
-        std::cout << "Put y position:\n";
-        std::cin >> y;
-
-        if (choice == "1"){
-            std::cin >> i_val;
-            tab.setIntValue(i_val, x, y);
-        } else 
-        if (choice == "2"){
-            std::cin >> s_val;
-            tab.setStringValue(s_val, x, y);
-        }
-    }
-
-
-    // Contain menu components
-    Component menu[] =
-    {
-        {"Display", dispayTable}, // display table content
-        {"Set cell value", setValue},
-        {"Quit", quit}            // close programm
-    };
-
-    // calculate menu size
-    static const unsigned int menu_size = sizeof(menu) / sizeof(menu[0]);
+    Table tab; // init table 
+    Menu menu; // init menu
 
     /**
-     * @brief run writing menu
+     * @brief clearing console in both Windows and Linux
      */
-    void run(){
-        // display selections list
-        for (int i = 0; i < menu_size; i ++){
-            std::cout << i << ". " << menu[i].selectionText << std::endl;
+    void clear_screen(); 
+
+    /**
+     * @brief add new menu selection
+     * 
+     * @param c menu component
+     * @param line selection text
+     */
+    void Menu::add(Command* c, string line){
+        commands.insert(pair<Command*, string>(c, line));
+    }
+
+    void Menu::run(){
+        map<Command*, string>::iterator it; // doble-value array
+        string choice; // user choice
+        int seletionCount = 0, commandCount = 0; 
+            
+        for(it = commands.begin(); it != commands.end(); it++, seletionCount++){
+            cout << seletionCount << '.' << it->second << '\n'; 
         }
-
-        // read user input
-        std::string selection;
-        std::cout << "Write selection number:" << std:: endl;
-        std::cin >> selection;
-
-        // check for selection existance 
-        try
-        {   
-            int selected = stoi(selection);
-            if (selected > menu_size - 1 || selected < 0){
-                throw selection;
-            } else {
-                // call action
-                (menu[selected].processingFunction)();
+            
+        // get use input
+        cin >> choice;
+        for(it = commands.begin(); it != commands.end(); it++, commandCount++){
+            if (commandCount == stoi(choice)){
+                it->first->execute();
+                cout << "Press ENTER...\n";
                 getchar();
                 getchar();
+                clear_screen();
+            } 
+        }
+    }
+
+    /**
+     * @brief Close program
+     * 
+     * exit from programm with 0 code
+     */
+    class Quit : public Command{
+        public:
+            virtual void execute(){
+                exit(0);
             }
-        }
-        catch(std::string selection)
-        {
-            std::cout << "Error: fail exception." << std::endl;
-        }
+    };
+
+    /**
+     * @brief Draw table content
+     */
+    class Display : public Command{
+        public:
+            virtual void execute(){
+                tab.display();
+            }
+    };
+
+    void clear_screen(){
+    #ifdef WINDOWS
+        std::system("cls");
+    #else
+        // Assume POSIX
+        std::system("clear");
+    #endif
+    }
+
+    /**
+     * @brief initialize data table
+     * 
+     * get file path from user and init table
+     */
+    void _initDataTable(){
+        string filePath;
+        cout << "Put file path:\n";
+        cin >> filePath;
+
+        tab._init(filePath);
+    }
+
+    /**
+     * @brief initialize menu
+     * 
+     * add new component to menu
+     */
+    void _initMenu(){
+        menu.add(new Display, "Display");
+        menu.add(new Quit, "Quit");
+    }
+
+    /**
+     * @brief rum menu
+     * 
+     * function for calling menu in nother files with out init
+     */
+    void _Run(){
+        menu.run();
     }
 } // namespace UserMenu

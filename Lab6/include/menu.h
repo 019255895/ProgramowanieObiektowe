@@ -1,50 +1,36 @@
 #pragma once
 #include <iostream>
-#include <vector>
+#include <map>
+#include "table.h"
+
+using namespace std;
+using namespace UserTable;
 
 namespace UserMenu
 {   
-    typedef void (*Menu_Processing_Function_Pointer)();
-
-    struct Component{
-        const char * selectionText;
-        Menu_Processing_Function_Pointer processingFunction;
+    /**
+     * @brief called item action
+     * 
+     * Command pattern realization
+     */
+    class Command{
+    public:
+        virtual void execute() = 0;
+    };
+    
+    /**
+     * @brief user menu
+     */
+    class Menu{
+    private:
+        map<Command*, string> commands;
+    public:
+        void add(Command* c, string line);
+        void run();
     };
 
-    /**
-     * @brief run menu write process
-     */
-    void run();
-    
-    
-    // struct Component
-    // {
-    //     const char * selectionText;
-    //     virtual void execute() = 0;
-    // };
+    void _initDataTable();
+    void _initMenu();
+    void _Run();
 
-    // struct FirtSelection : public Component
-    // {
-    //     const char * selectionText = "First selection";
-    //     void execute() {
-    //         std::cout << "first";
-    //     }
-    // };
-
-    // class Menu
-    // {
-    // private:
-    //     std::vector<Component*> components;
-    // public:
-    //     void add(Component* c){
-    //         components.push_back(c);
-    //     }
-
-    //     void run(){
-    //         std::vector<Component*> ::iterator it;
-    //         for(it = components.begin(); it < components.end(); it++){
-    //             (*it)->execute();
-    //         }
-    //     }
-    // };
 } // namespace UserMenu

@@ -13,7 +13,8 @@ namespace UserTable
         return !s.empty() && it == s.end();
     }
 
-    Table::Table(std::string filePath) : path(filePath){
+    void Table::_init(std::string filePath){
+        path = filePath;
         std::ifstream fp(filePath);
         
         if (fp.is_open()){
@@ -50,8 +51,47 @@ namespace UserTable
             std::cout << "Error: can't open file path \n";
         }
 
-        fp.close();
+        fp.close(); 
     }
+    // Table::Table(std::string filePath) : path(filePath){
+    //     std::ifstream fp(filePath);
+        
+    //     if (fp.is_open()){
+    //         fp >> width;
+    //         fp >> height;
+
+    //         data = new Cell * [width];
+    //         for (size_t i = 0; i < width; i ++){
+    //             data[i] = new Cell [height];
+    //         }
+
+    //         for (size_t i = 0; i < width; i ++){
+    //             std::string line;
+                
+    //             for (size_t j = 0; j < height; j ++){
+    //                 fp >> line;
+                        
+    //                 std::string val;
+    //                 val.reserve(line.size()); // optional, avoids buffer reallocations in the loop
+    //                 for(size_t i = 0; i < line.size(); ++i){
+    //                     if(line[i] != ',') val += line[i];
+    //                 }
+                    
+    //                 if (is_number(val)){
+    //                     data[i][j].type = v_int;
+    //                     data[i][j].number = stoi(val);
+    //                 } else {
+    //                     data[i][j].type = v_string;
+    //                     data[i][j].line = val;
+    //                 }
+    //             }
+    //         }
+    //     } else {
+    //         std::cout << "Error: can't open file path \n";
+    //     }
+
+    //     fp.close();
+    // }
 
     Table::~Table()
     {   
@@ -77,6 +117,7 @@ namespace UserTable
         }
 
         ofs.close();
+
         for (auto i = 0; i < height; i++) 
             delete[] data[i];
         
