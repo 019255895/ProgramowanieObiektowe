@@ -18,12 +18,15 @@ using std::vector;
 
 namespace UserCell
 {
+    /**
+     * @class Cell value interfce
+     */
     class Cell{
         public:
             Cell();
-            virtual int getInteger();
-            virtual string getString();
-            virtual void set(string value);  
+            virtual int getInteger() = 0;
+            virtual string getString() = 0;
+            virtual void set(string value) = 0;  
     };
 
     class NumberCell : public Cell{
@@ -39,18 +42,26 @@ namespace UserCell
                 return _number;
             }
 
+            string getString(){
+                return "";
+            };
     };
 
     class TextCell : public Cell{
         private:
             string _text;
         public:
+            TextCell();
             void set(string value){
                 _text = value;
             }
 
             string getString(){
                 return _text;
+            }
+
+            int getInteger(){
+                return 0;
             }
     };
 } // namespace UserCell

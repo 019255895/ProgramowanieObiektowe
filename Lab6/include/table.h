@@ -10,46 +10,101 @@ namespace UserTable
         _int, _string
     } Type;
 
-    // class Column{
-    //     public:
-    //         virtual void setInteger(int position, int value) = 0;
-    //         virtual void setString(int position, string value) = 0;
-    //         virtual int getInteger(int position);
-    //         virtual string getString(int position);
-    // };
+    class Column{
+        public:
+            virtual void set(int position, string value) = 0;
+            virtual int getInteger(int position) = 0;
+            virtual string getString(int position) = 0;
+    };
 
-    // class NumberColumn
+    class NumberColumn : public Column{
+        private:
+            string _title = "No title";
+            int _size;
+            Type _type;
+            Cell** column;
+        public:
+            NumberColumn(Type type, int size, string title) : _type(type), _size(size), _title(title){
+                column = new Cell*[_size];
+                
+                for (int i = 0; i < _size; i++){
+                    column[i] = new NumberCell();
+                }
+            }
 
-    class Table
-    {
+            void set(int position, string value){
+                if (position <= _size){
+                    column[position]->set(value); 
+                }
+            }
+
+            int getInteger(int position){
+                if (position <= _size){
+                    return column[position]->getInteger();
+                }
+            }
+
+            string getString(int position){
+                return "";
+            }
+    };
+
+    class TextColumn : public Column{
+        private:
+            string _title = "No title";
+            int _size;
+            Type _type;
+            Cell** column;
+        public:
+            TextColumn(Type type, int size, string title) : _type(type), _size(size), _title(title){
+                column = new Cell*[_size];
+                
+                for (int i = 0; i < _size; i++){
+                    column[i] = new TextCell();
+                }
+            }
+
+            void set(int position, string value){
+                if (position <= _size){
+                    column[position]->set(value); 
+                }
+            }
+
+            string getString(int position){
+                if (position <= _size){
+                    return column[position]->getString();
+                }
+            }
+
+            int getInteger(int position){
+                return 0;
+            }
+    };
+
+    class Table{
         private:
             int width, height;
+            Type* types;
             string _path;
-            Type* type;
-            Cell*** table;
+            string* titles;
+            Column** table;
         public:
             void init(){
-                type = new Type[width];
-                
-                table = new Cell**[width];
+                types = new Type[width];
+                titles = new string[width];
+                table = new Column*[width];
 
                 for (int i = 0; i < width; i++){
-                    table[i] = new Cell*[height];
-                }
-
-                for (int i = 0; i < width; i++){
-                    for (int j = 0; j < height; j++){
-                        if (type[i] == _int){
-                            table[i][j] = new NumberCell();
-                        }
-                        if (type[i] == _string){
-                            table[i][j] = new TextCell();
-                        }
+                    if (types[i] == _int){
+                        table[i] = new NumberColumn(types[i], height, titles[i]);
+                    } else 
+                    if (types[i] == _string){
+                        table[i] = new TextColumn(types[i], height, titles[i]);
                     }
                 }
             }
 
             void readFromFile(string path);
-    };   
+    };
 } // namespace UserTable
 
