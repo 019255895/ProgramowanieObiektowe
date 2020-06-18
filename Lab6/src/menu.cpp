@@ -8,7 +8,7 @@ using namespace UserTable;
 namespace UserMenu
 {   
     
-    Table tab; // init table 
+    // Table tab; // init table 
     Menu menu; // init menu
 
     /**
@@ -66,7 +66,7 @@ namespace UserMenu
     class Display : public Command{
         public:
             virtual void execute(){
-                tab.display();
+                // tab.display();
             }
     };
 
@@ -84,13 +84,13 @@ namespace UserMenu
      * 
      * get file path from user and init table
      */
-    void _initDataTable(){
-        string filePath;
-        cout << "Put file path:\n";
-        cin >> filePath;
+    // void _initDataTable(){
+    //     string filePath;
+    //     cout << "Put file path:\n";
+    //     cin >> filePath;
 
-        tab._init(filePath);
-    }
+    //     tab._init(filePath);
+    // }
 
     /**
      * @brief initialize menu

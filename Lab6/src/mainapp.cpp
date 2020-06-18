@@ -6,7 +6,7 @@ using namespace UserMenu;
 
 int main(int argc, char const *argv[])
 {
-    _initDataTable();
+    // _initDataTable();
     _initMenu();
 
     while(true) _Run();    
